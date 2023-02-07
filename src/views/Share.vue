@@ -58,6 +58,7 @@ export default {
 		},
 		setOGMetadata() {
 			document.querySelector('meta[property="og:title"]').content = 'Yay'
+			document.querySelector('meta[property="twitter:title"]').content = 'Yay'
 		}
 	}
 }
