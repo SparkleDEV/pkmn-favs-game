@@ -28,6 +28,7 @@ export default {
 	mounted() {
 		this.getPokemonList()
 		this.setPageTitle()
+		this.setOGMetadata()
 	},
 	methods: {
 		setPageTitle() {
@@ -54,6 +55,9 @@ export default {
 				}
 				this.results[type.id] = this.getPokemonFromId(this.$route.query[type.id])
 			})
+		},
+		setOGMetadata() {
+			document.querySelector('meta[property="og:title"]').content = 'Yay'
 		}
 	}
 }
