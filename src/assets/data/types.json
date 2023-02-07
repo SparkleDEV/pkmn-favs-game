@@ -1,0 +1,97 @@
+[
+	{
+		"id": "normal",
+		"display": "Normal",
+		"color": "#aaaa99"
+	},
+	{
+		"id": "fire",
+		"display": "Fire",
+		"color": "#ff4422"
+	},
+	{
+		"id": "water",
+		"display": "Water",
+		"color": "#3399ff"
+	},
+	{
+		"id": "normal",
+		"display": "Normal",
+		"color": "#3399ff"
+	},
+	{
+		"id": "electric",
+		"display": "Electric",
+		"color": "#ffcc33"
+	},
+	{
+		"id": "grass",
+		"display": "Grass",
+		"color": "#77cc55"
+	},
+	{
+		"id": "ice",
+		"display": "Ice",
+		"color": "#66ccff"
+	},
+	{
+		"id": "fighting",
+		"display": "Fighting",
+		"color": "#bb5544"
+	},
+	{
+		"id": "poison",
+		"display": "Poison",
+		"color": "#aa5599"
+	},
+	{
+		"id": "ground",
+		"display": "Ground",
+		"color": "#ddbb55"
+	},
+	{
+		"id": "flying",
+		"display": "Flying",
+		"color": "#8899ff"
+	},
+	{
+		"id": "psychic",
+		"display": "Psychic",
+		"color": "#ff5599"
+	},
+	{
+		"id": "bug",
+		"display": "Bug",
+		"color": "#aabb22"
+	},
+	{
+		"id": "rock",
+		"display": "Rock",
+		"color": "#bbaa66"
+	},
+	{
+		"id": "ghost",
+		"display": "Ghost",
+		"color": "#6666bb"
+	},
+	{
+		"id": "dragon",
+		"display": "Dragon",
+		"color": "#7766ee"
+	},
+	{
+		"id": "dark",
+		"display": "Dark",
+		"color": "#775544"
+	},
+	{
+		"id": "steel",
+		"display": "Steel",
+		"color": "#aaaabb"
+	},
+	{
+		"id": "fairy",
+		"display": "Fairy",
+		"color": "#ee99ee"
+	}
+]

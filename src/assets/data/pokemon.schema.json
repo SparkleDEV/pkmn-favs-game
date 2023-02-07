@@ -1,0 +1,57 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema",
+	"type": "object",
+	"required": ["data"],
+	"properties": {
+		"data": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "number",
+						"description": "The Pokédex ID",
+						"minimum": 1
+					},
+					"name": {
+						"type": "string",
+						"description": "The english name"
+					},
+					"gen": {
+						"type": "number",
+						"minimum": 1,
+						"description": "The number of the generation"
+					},
+					"types": {
+						"type": "array",
+						"items": {
+							"type": "string",
+							"enum": [
+								"normal",
+								"fire",
+								"water",
+								"electric",
+								"grass",
+								"ice",
+								"fighting",
+								"poison",
+								"ground",
+								"flying",
+								"psychic",
+								"bug",
+								"rock",
+								"ghost",
+								"dragon",
+								"dark",
+								"steel",
+								"fairy"
+							]
+						},
+						"minItems": 1,
+						"maxItems": 2
+					}
+				}
+			}
+		}
+	}
+}
