@@ -41,6 +41,7 @@ export default {
 			this.$router.push({ name: 'home' })
 			return
 		}
+		document.title = 'Game | Pokémon Favs Game'
 
 		await this.createPokemonLists()
 		this.selectType()

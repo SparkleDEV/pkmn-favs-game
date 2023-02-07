@@ -35,6 +35,7 @@ export default {
 			this.$router.push({ name: 'game' })
 			return
 		}
+		document.title = 'Home | Pokémon Favs Game'
 		generations.forEach((g) => {
 			var x = {
 				name: g.name,

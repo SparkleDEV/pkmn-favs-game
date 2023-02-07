@@ -50,6 +50,7 @@ export default {
 			this.$router.push({ name: 'home' })
 			return
 		}
+		document.title = 'Results | Pokémon Favs Game'
 
 		this.listToResults()
 	},
