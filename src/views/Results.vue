@@ -3,22 +3,25 @@
 		<p>Click on any card to replay the game for that specific type</p>
 		<div class="buttons-region">
 			<button class="save-button" @click="screenshot()">Save image</button>
+			<button class="share-button" @click="modal_open = true">Share</button>
 			<ResetButton prompt_text="Are you sure you wanna delete all your results and start over again?" />
 		</div>
 		<div class="results-table-wrapper" id="screenshot-region">
 			<h2 class="title">Those are my favorite Pokémon of each type</h2>
-			<div class="results-table">
-				<PkmnResultDisplay
-					v-for="typeid in Object.keys(results)"
-					:key="typeid"
-					:pokemon="results[typeid]"
-					:type="getTypeObject(typeid)"
-					@click="replayForType(typeid)"
-				/>
-			</div>
+			<ResultsTable :results="results" @cardClickEvent="replayForType" />
 			<span class="subtext">Created with <span class="fakelink">https://pkmngame.sparkle.gay</span></span>
 		</div>
 	</div>
+	<Modal @close="modal_open = false" v-if="modal_open" default_close_button="true">
+		<div class="share-link-modal">
+			<label class="name-label">Enter your name:</label>
+			<input type="text" class="name-input" v-model="name" />
+			<div class="share-link">
+				<input class="share-link-text" type="text" readonly :value="getShareUrl()" id="share-link" />
+				<button class="share-link-copy" @click="copyToClipboard('share-link')">Copy</button>
+			</div>
+		</div>
+	</Modal>
 </template>
 
 <script>
@@ -26,11 +29,12 @@ import types from '@/assets/data/types.json'
 import pokemon from '@/assets/data/pokemon.json'
 import html2canvas from '@/scripts/html2canvas.min.js'
 import filesaver from '@/scripts/FileSaver.js' // Wird actually genutzt, auch wenns ausgegraut ist
-import PkmnResultDisplay from '@/components/PokemonResultDisplay.vue'
 import ResetButton from '@/components/ResetButton.vue'
+import ResultsTable from '@/components/ResultsTable.vue'
+import Modal from '@/components/Modal.vue'
 
 export default {
-	components: { PkmnResultDisplay, ResetButton },
+	components: { ResetButton, ResultsTable, Modal },
 	data() {
 		return {
 			results: {},
@@ -38,7 +42,9 @@ export default {
 				id: 0,
 				name: 'No Pokémon was chosen',
 				types: []
-			}
+			},
+			modal_open: false,
+			name: ''
 		}
 	},
 	mounted() {
@@ -61,9 +67,6 @@ export default {
 				this.results[index] = lists[index].length >= 1 ? lists[index][0] : this.placeholder
 			})
 		},
-		getTypeObject(typeid) {
-			return types.filter((t) => t.id == typeid)[0]
-		},
 		screenshot() {
 			html2canvas(document.getElementById('screenshot-region'), {
 				allowTaint: true,
@@ -73,6 +76,9 @@ export default {
 					window.saveAs(blob, 'pkmngame.png')
 				})
 			})
+		},
+		getTypeObject(typeid) {
+			return types.filter((t) => t.id == typeid)[0]
 		},
 		replayForType(typeid) {
 			if (!confirm(`Do you wanna replay the game for ${this.getTypeObject(typeid).display}-pokémon?`)) {
@@ -89,12 +95,36 @@ export default {
 			this.$store.commit('setPokemonLists', lists)
 			this.$store.commit('setGameEnded', false)
 			this.$router.push({ name: 'game' })
+		},
+		getShareUrl() {
+			var url = `${window.location.origin}/share`
+			var params = ''
+			if (this.name != '') {
+				params += `?name=${this.name}`
+			}
+			Object.keys(this.results).forEach((r) => {
+				if (this.results[r].id == 0) return
+				if (params.length <= 0) {
+					params += '?'
+				} else {
+					params += '&'
+				}
+				params += `${r}=${this.results[r].id}`
+			})
+			return url + params
+		},
+		copyToClipboard: async (id) => {
+			var value = document.getElementById(id).value
+			await navigator.clipboard.writeText(value)
+			alert('Copied!')
 		}
 	}
 }
 </script>
 
 <style lang="scss" scoped>
+@use '@/assets/sass/util' as util;
+
 .title {
 	background-color: #fff;
 	padding: 16px 0;
@@ -104,15 +134,6 @@ export default {
 .results-table-wrapper {
 	width: fit-content;
 	margin: 0 auto;
-}
-
-.results-table {
-	display: grid;
-	grid-template-columns: min-content min-content min-content min-content min-content min-content;
-	gap: 3px;
-	background-color: #000;
-	border: 3px solid #000;
-	border-radius: 4px;
 }
 
 .subtext {
@@ -133,17 +154,41 @@ export default {
 }
 
 .save-button {
-	padding: 6px 10px;
-	color: #fff;
-	background-color: #29bf29;
-	border: none;
-	border-radius: 4px;
-	font-size: 1.05rem;
-	transition: background-color 0.3s;
-	margin: 0 2px;
+	@include util.button(#29bf29);
+}
 
-	&:hover {
-		background-color: mix(#29bf29, #fff, 70);
-	}
+.share-button {
+	@include util.button(#0055ff);
+}
+
+.share-link-modal {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	font-size: 1.2rem;
+}
+
+.name-input,
+.share-link-text {
+	font-size: 1.2rem;
+	border: none;
+	border-bottom: 1px solid #000;
+	border-radius: 0;
+	width: 100%;
+}
+
+.share-link {
+	margin: 1ch 0;
+}
+
+.share-link-text {
+	width: auto;
+	background-color: #d4d4d4;
+	color: #1e1e1e;
+	font-style: italic;
+}
+
+.share-link-copy {
+	@include util.button(#29bf29);
 }
 </style>

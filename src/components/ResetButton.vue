@@ -23,18 +23,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.reset {
-	padding: 6px 10px;
-	color: #fff;
-	background-color: #f00;
-	border: none;
-	border-radius: 4px;
-	font-size: 1.05rem;
-	transition: background-color 0.3s;
-	margin: 0 2px;
+@use '@/assets/sass/util' as util;
 
-	&:hover {
-		background-color: mix(#f00, #fff, 70);
-	}
+.reset {
+	@include util.button(#f00);
 }
 </style>

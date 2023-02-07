@@ -1,0 +1,16 @@
+@mixin button($background-color, $color: #fff, $font-size: 1.05rem) {
+	padding: 6px 10px;
+	color: $color;
+	background-color: $background-color;
+	border: none;
+	border-radius: 4px;
+	font-size: $font-size;
+	transition: background-color 0.3s;
+	margin: 0 2px;
+	text-decoration: none;
+	cursor: pointer;
+
+	&:hover {
+		background-color: mix($background-color, #fff, 70);
+	}
+}
